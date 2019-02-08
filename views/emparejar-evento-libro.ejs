@@ -1,0 +1,95 @@
+<% const existeMensaje = typeof mensaje !== "undefined" %>
+<% const existeRol = typeof mensajeEvento !== "undefined" %>
+<%- include('header'); %>
+<!--<link rel="stylesheet" href="/bootstrap/css/bootstrap.css"> -->
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
+
+<% if (existeMensaje){ %>
+<p>MENSAJE: <%= mensaje %></p>
+<% } %>
+<% if (existeRol){ %>
+<p>MENSAJE: <%= mensajeEvento %></p>
+<% } %>
+
+
+<div class="container">
+    <h1 align="center">Asignar eventos </h1>
+    <div class="row">
+        <div class="col-sm-4" align="center">
+            <h2>Libro</h2>
+            <table>
+                <tr>
+                    <td><%= libro.icbn_libro %></td>
+                </tr>
+                <tr>
+                    <td><%= libro.nombre_libro %></td>
+                </tr>
+                <tr>
+                    <td><%= libro.numero_paginas %></td>
+                </tr>
+                <tr>
+                    <td><%= libro.edicion %></td>
+                </tr>
+                <tr>
+                    <td><%= libro.fecha_publicacion %></td>
+                </tr>
+                <tr>
+                    <td><%= libro.nombre_editorial %></td>
+                </tr>
+            </table>
+
+        </div>
+
+
+        <div class="col-sm-4" align="center">
+            <h2>Eventos por Libro</h2>
+            <table>
+                <% eventosPorLibro.forEach(eventoPorLibro=> { %>
+                <tr>
+                    <td><%= eventoPorLibro.evento.nombre_evento %></td>
+                    <td>
+                        <form action="/evento-por-libro/borrar/<%= autor %>/<%= eventoPorLibro.id %>" method="POST">
+                            <button type="submit"> eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                <% }) %>
+            </table>
+        </div>
+
+        <div class="col-sm-4" align="center">
+
+            <form action="/evento-por-libro/empareajar/<%= autor %>/<%= libro.id %>" method="POST">
+                <div>
+                    <label for="evento"></label>
+                    <select name="evento" id="evento">
+                        <% eventos.forEach(evento => { %>
+                        <option value="<%= evento.id %>">
+
+                            <%= evento.nombre_evento %></option>
+                        <% }) %>
+                    </select>
+                </div>
+                <br>
+                <button>Agregar evento</button>
+            </form>
+
+        </div>
+
+        <br>
+
+    </div>
+
+    <a href="/libro/listar/<%= autor %>/">
+        <button class="btn btn-outline-info  espaciado-boton">Regresar</button>
+    </a>
+</div>
+
+
+<%- include('footer'); %>
+

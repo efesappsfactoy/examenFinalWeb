@@ -26,12 +26,10 @@ export class EventoPorLibroController {
       let eventosPorLibro: EventoPorLibroEntity[];
       let eventos: EventoEntity[];
 
-      /*
-                  if (notificacion) {
-                      mensajeEventoRepetido = `El evento ${notificacion} ya se encuentra asignado a este libro`
+      if (notificacion) {
+        mensajeEventoRepetido = `El evento ${notificacion} ya se encuentra asignado a este libro`;
 
-                  }
-      */
+      }
 
       const libro = await this._libroService.buscarPorId(+idLibro);
 
@@ -39,12 +37,12 @@ export class EventoPorLibroController {
 
       eventos = await this._eventoService.obtenerEvento();
 
-      response.render('asignar-evento',
+      response.render('emparejar-evento-libro',
         {
           libro: libro,
-          eventoPorLibro: eventosPorLibro,
-          evento: eventos,
-          mensaje: mensajeEventoRepetido,
+          eventosPorLibro: eventosPorLibro,
+          eventos: eventos,
+          mensajeEvento: mensajeEventoRepetido,
           autor: idAutor
         });
     } else {
