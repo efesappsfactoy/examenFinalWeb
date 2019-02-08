@@ -27,7 +27,7 @@ import {RolModule} from "./rol/rol.module";
       password: '123',
       database: 'web',
       synchronize: true,
-      dropSchema: true,
+      dropSchema: false,
       entities: [
         RolEntity, UsuarioEntity, LibroEntity, AutorEntity, RolPorUsuarioEntity, EventoEntity, EventoPorLibroEntity
       ],

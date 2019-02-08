@@ -1,169 +1,156 @@
-import {BadRequestException, Body, Controller, Get, Param, Post, Query, Res, Session} from "@nestjs/common";
-import {UsuarioService} from "./usuario.service";
-import {UsuarioEntity} from "./usuario.entity";
-import {AutorEntity} from "../autor/autor.entity";
-import {FindManyOptions, Like} from "typeorm";
-import {stringify} from "querystring";
-import {RolPorUsuarioService} from "../rol-por-usuario/rol-por-usuario.service";
-import {RolPorUsuarioEntity} from "../rol-por-usuario/rol-por-usuario.entity";
-import {CreateAutorDto} from "../autor/dto/create-autor.dto";
-import {CreateUsuarioDto} from "./dto/create-usuario.dto";
-import {validate, ValidationError} from "class-validator";
+import { BadRequestException, Body, Controller, Get, Param, Post, Query, Res, Session } from '@nestjs/common';
+import { UsuarioService } from './usuario.service';
+import { UsuarioEntity } from './usuario.entity';
+import { FindManyOptions, Like } from 'typeorm';
+import { CreateUsuarioDto } from './dto/create-usuario.dto';
+import { validate, ValidationError } from 'class-validator';
 
 @Controller('usuario')
 
 export class UsuarioController {
-    constructor( private readonly _usuarioService: UsuarioService,
-                 //private readonly _rolPorUsuarioServicio:RolPorUsuarioService
-    ) {
+  constructor(
+    private readonly _usuarioService: UsuarioService
+  ) {
 
-    }
+  }
 
-    @Get('inicio')
-    async mostrarUsuario(
-        @Res() res,
-        @Session() sesion,
-        @Query('accion') accion:string,
-        @Query('nombre') nombre:string,
-        @Query('busqueda') busqueda:string
-    ){
-        if(sesion.rol==='administrador') {
-            let mensaje = undefined;
-            console.log(sesion)
+  @Get('inicio')
+  async mostrarUsuario(
+    @Res() res,
+    @Session() sesion,
+    @Query('accion') accion: string,
+    @Query('nombre') nombre: string,
+    @Query('busqueda') busqueda: string
+  ) {
+    if (sesion.rol === 'administrador') {
+      let mensaje = undefined;
+      console.log(sesion);
 
-            if (accion && nombre) {
-                switch (accion) {
-                    case 'actualizar':
-                        mensaje = `Rol al usuario ${nombre} actualizado`;
-                        break;
-                    case 'borrar':
-                        mensaje = `Registro ${nombre} eliminado`;
-                        break;
-                }
+      if (accion && nombre) {
+        switch (accion) {
+          case 'actualizar':
+            mensaje = `Rol al usuario ${nombre} actualizado`;
+            break;
+          case 'borrar':
+            mensaje = `Registro ${nombre} eliminado`;
+            break;
+        }
+      }
+
+      let usuarios: UsuarioEntity[];
+
+      if (busqueda) {
+
+        const consulta: FindManyOptions<UsuarioEntity> = {
+          where: [
+            {
+              nombre: Like(`%${busqueda}%`)
+            },
+            {
+              correo: Like(`%${busqueda}%`)
             }
+          ]
+        };
 
-            let usuarios: UsuarioEntity[];
+        usuarios = await this._usuarioService.buscar(consulta);
+      } else {
 
-            if (busqueda) {
+        usuarios = await this._usuarioService.buscar();
+      }
 
-                const consulta: FindManyOptions<UsuarioEntity> = {
-                    where: [
-                        {
-                            nombre: Like(`%${busqueda}%`)
-                        },
-                        {
-                            correo: Like(`%${busqueda}%`)
-                        },
-                    ]
-                };
+      res.render('lista-usuario',
+        {
+          arregloUsuario: usuarios,
+          mensaje: mensaje
 
-                usuarios = await this._usuarioService.buscar(consulta);
-            } else {
+        });
+    } else {
+      throw new BadRequestException({ mensaje: 'No tiene acceso a esta vista' });
+    }
+  }
 
-                usuarios = await this._usuarioService.buscar();
-            }
+  @Post('borrar/:idUsuario')
+  async borrar(
+    @Param('idUsuario') idUsuario: string,
+    @Res() response
+  ) {
+    const usuarioEncontrado = await this._usuarioService
+      .buscarPorId(+idUsuario);
 
-            res.render('lista-usuario',
-                {
-                    arregloUsuario: usuarios,
-                    mensaje: mensaje,
+    await this._usuarioService.borrar(Number(idUsuario));
 
-                })
-        }else{
-            throw new BadRequestException({mensaje: "No tiene acceso a esta vista"});
-        }
+    const parametrosConsulta = `?accion=borrar&nombre=${usuarioEncontrado.nombre}`;
+
+    response.redirect('/usuario/inicio' + parametrosConsulta);
+  }
+
+  @Get('crear')
+  async mostrarCrearUsuario(
+    @Res() res,
+    @Query('error') error: string
+  ) {
+
+    let mensaje = undefined;
+
+    if (error) {
+      mensaje = error;
     }
 
+    res.render('crearRegistro-usuario', {
+      mensaje: mensaje
+    });
+  }
 
+  @Post('crear')
+  async crearUsuarioFuncion(
+    @Res() res,
+    @Body() datosUsuario
+  ) {
 
+    let mensaje = undefined;
 
+    const objetoValidacionUsuario = new CreateUsuarioDto();
 
-    @Post('borrarAutor/:idUsuario')
-    async borrar(
-        @Param('idUsuario') idUsuario: string,
-        @Res() response
-    ) {
-        const usuarioEncontrado = await this._usuarioService
-            .buscarPorId(+idUsuario);
+    objetoValidacionUsuario.nombre = datosUsuario.nombre;
 
-        await this._usuarioService.borrar(Number(idUsuario));
+    objetoValidacionUsuario.correo = datosUsuario.correo;
 
-        const parametrosConsulta = `?accion=borrar&nombre=${usuarioEncontrado.nombre}`;
+    objetoValidacionUsuario.password = datosUsuario.password;
 
-        response.redirect('/usuario/inicio' + parametrosConsulta);
+    const fec = new Date(datosUsuario.fechaNacimiento).toISOString();
+    objetoValidacionUsuario.fechaNacimiento = fec;
+
+    const errores: ValidationError[] =
+      await validate(objetoValidacionUsuario); // Me devuelve un arreglo de validacion de errores
+
+    let listaErrores = [];
+
+    errores.forEach((error) => {
+      listaErrores.push(error.constraints['matches']);
+      listaErrores.push(error.constraints['isNotEmpty']);
+      listaErrores.push(error.constraints['isDateString']);
+    });
+    const hayErrores = errores.length > 0;
+
+    if (hayErrores) {
+      console.error(errores);
+
+      const parametrosConsulta = `?error=${listaErrores}`;
+
+      res.redirect('/usuario/crearRegistro-usuario' + parametrosConsulta);
+    } else {
+
+      const respuesta = await this._usuarioService.crear(datosUsuario);
+      res.render('login');
     }
-
-
-
-
-
-    @Get('crearRegistro-usuario')
-    async mostrarCrearUsuario(
-        @Res() res,
-        @Query('error') error: string
-    ){
-
-        let mensaje = undefined;
-
-        if(error){
-            mensaje = error;
-        }
-
-        res.render('crearRegistro-usuario',{
-            mensaje:mensaje
-        })
-    }
-
-    @Post('crearRegistro-usuario')
-    async crearUsuarioFuncion(
-        @Res() res,
-        @Body() datosUsuario
-    ) {
-
-        let mensaje = undefined;
-
-        const objetoValidacionUsuario = new CreateUsuarioDto();
-
-        objetoValidacionUsuario.nombre = datosUsuario.nombre
-
-        objetoValidacionUsuario.correo = datosUsuario.correo;
-
-        objetoValidacionUsuario.password = datosUsuario.password;
-
-        const fec = new Date(datosUsuario.fechaNacimiento).toISOString();
-        objetoValidacionUsuario.fechaNacimiento = fec
-
-        const errores: ValidationError[] =
-            await validate(objetoValidacionUsuario) // Me devuelve un arreglo de validacion de errores
-
-        let listaErrores= []
-
-        errores.forEach((error)=>{
-            listaErrores.push(error.constraints["matches"])
-            listaErrores.push(error.constraints["isNotEmpty"])
-            listaErrores.push(error.constraints["isDateString"])
-        })
-        const hayErrores = errores.length > 0;
-
-        if (hayErrores) {
-            console.error(errores)
-
-            const parametrosConsulta = `?error=${listaErrores}`;
-
-            res.redirect('/usuario/crearRegistro-usuario' + parametrosConsulta)
-        } else {
-
-            const respuesta = await this._usuarioService.crear(datosUsuario)
-            res.render('login')
-        }
-    }
+  }
 
 }
 
-export interface Usuario{
-    id?:number;
-    nombre: string;
-    correo: string;
-    password: string;
-    fechaNacimiento: string
+export interface Usuario {
+  id?: number;
+  nombre: string;
+  correo: string;
+  password: string;
+  fechaNacimiento: string
 }
