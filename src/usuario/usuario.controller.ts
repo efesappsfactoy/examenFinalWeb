@@ -96,9 +96,11 @@ export class UsuarioController {
       mensaje = error;
     }
 
-    res.render('crearRegistro-usuario', {
-      mensaje: mensaje
-    });
+    res.render(
+      'crear-usuario',
+      {
+        mensaje: mensaje
+      });
   }
 
   @Post('crear')
