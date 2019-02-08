@@ -80,7 +80,7 @@ export class EventoController {
         mensaje = error;
       }
       response.render(
-        'crear-evento',
+        'crearRegistro-evento',
         {
           mensaje: mensaje,
         });
@@ -117,7 +117,7 @@ export class EventoController {
     if (hayErrores) {
       console.error(errores);
       const parametrosConsulta = `?error=${listaErrores}`;
-      response.redirect('/eventos/crear/' + parametrosConsulta);
+      response.redirect('/eventos/crearRegistro/' + parametrosConsulta);
     } else {
       await this._eventoService.crear(evento);
       const parametrosConsulta = `?accion=crear&nombre=${evento.nombre_evento}`;
@@ -157,7 +157,7 @@ export class EventoController {
         .buscarPorId(+idEvento);
 
       response.render(
-        'crear-evento', {
+        'crearRegistro-evento', {
           evento: eventoParaActualizar,
           mensaje: mensaje,
           idEvento: idEvento,

@@ -46,5 +46,5 @@ export class EventoEntity {
     type => EventoPorLibroEntity,
     eventoPorLibro => eventoPorLibro.evento,
   )
-  eventosPorLibro: EventoPorLibroEntity[];
+  librosPorEvento: EventoPorLibroEntity[];
 }

@@ -78,7 +78,7 @@ export class LibroController {
     }
   }
 
-  @Get('crear/:idAutor')
+  @Get('crearRegistro/:idAutor')
   crearLibro(
     @Res() response,
     @Param('idAutor') idAutor: string,
@@ -93,7 +93,7 @@ export class LibroController {
       }
 
       response.render(
-        'crear-libro',
+        'crearRegistro-libro',
         {
           idAutor: idAutor,
           mensaje: mensaje,
@@ -104,7 +104,7 @@ export class LibroController {
     }
   }
 
-  @Post('crear/:idAutor')
+  @Post('crearRegistro/:idAutor')
   async crearLibroFuncion(
     @Res() response,
     @Body() libro: LibroInterface,
@@ -143,7 +143,7 @@ export class LibroController {
       clase = 'alert alert-danger';
       const parametrosConsulta = `?error=${listaErrores}`;
       response.redirect(
-        '/libros/crear/' + idAutor + parametrosConsulta,
+        '/libros/crearRegistro/' + idAutor + parametrosConsulta,
         {
           clase: clase,
         });
@@ -185,7 +185,7 @@ export class LibroController {
         .buscarPorId(+idLibro);
 
       response.render(
-        'crear-libro', {
+        'crearRegistro-libro', {
           libro: libroParaActualizar,
           idAutor: idAutor,
           idLibro: idLibro,

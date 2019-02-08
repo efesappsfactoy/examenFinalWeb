@@ -13,7 +13,7 @@ export class EventoPorLibroService {
 
   }
 
-  async crear(eventoPorLibro: EventoPorLibroInterface): Promise<EventoPorLibroEntity> {
+  async crearRegistro(eventoPorLibro: EventoPorLibroInterface): Promise<EventoPorLibroEntity> {
     const eventoPorLibroEntity = this._eventoPorLibroRepository.create(eventoPorLibro);
     return await this._eventoPorLibroRepository.save(eventoPorLibroEntity);
   }

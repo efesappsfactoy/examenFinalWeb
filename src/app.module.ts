@@ -29,7 +29,7 @@ import {RolModule} from "./rol/rol.module";
       // BDD Ya existe -> synchronized: false
       synchronize: true,
       dropSchema: false
-        , //borra la base y se vuelve a crear, buena idea para pruebas pero no para produccion
+        , //borra la base y se vuelve a crearRegistro, buena idea para pruebas pero no para produccion
       entities: [
         RolEntity, UsuarioEntity, LibroEntity, AutorEntity, RolPorUsuarioEntity, EventoEntity, EventoPorLibroEntity
       ],

@@ -13,8 +13,8 @@ export class EventoPorLibroController {
               private readonly _eventoService: EventoService) {
   }
 
-  @Get('asignar-evento/:idAutor/:idLibro')
-  async asignarLibroPorEvento(
+  @Get('emparejar/:idAutor/:idLibro')
+  async emparejarLibroPorEvento(
     @Res() response,
     @Session() sesion,
     @Param('idAutor') idAutor,
@@ -52,8 +52,8 @@ export class EventoPorLibroController {
     }
   }
 
-  @Post('asignar-evento/:idAutor/:idLibro')
-  async metodoAsignarRol(
+  @Post('emparejar/:idAutor/:idLibro')
+  async emparejarLibroPorEventoFuncion(
     @Res() response,
     @Param('idLibro') idLibro,
     @Param('idAutor') idAutor,
@@ -65,15 +65,15 @@ export class EventoPorLibroController {
 
     if (eventosPorLibro) {
       const parametrosConsulta = `?notificacion=${eventosPorLibro.evento.nombre_evento}`;
-      response.redirect('/evento-por-libro/asignar-evento/' + idAutor + '/' + idLibro + parametrosConsulta);
+      response.redirect('/evento-por-libro/emparejar/' + idAutor + '/' + idLibro + parametrosConsulta);
     } else {
       eventoPorLibro.libro = idLibro,
-        await this._eventoPorLibroService.crear(eventoPorLibro);
-      response.redirect('/evento-por-libro/asignar-evento/' + idAutor + '/' + idLibro);
+        await this._eventoPorLibroService.crearRegistro(eventoPorLibro);
+      response.redirect('/evento-por-libro/emparejar/' + idAutor + '/' + idLibro);
     }
   }
 
-  @Post('borrar-evento-por-libro/:idAutor/:idEventoPorLibro')
+  @Post('borrar/:idAutor/:idEventoPorLibro')
   async borrarEventoPorLibro(
     @Param('idEventoPorLibro') idEventoPorLibro,
     @Res() response,
@@ -82,7 +82,7 @@ export class EventoPorLibroController {
     const eventoPorLibro = await this._eventoPorLibroService
       .buscarPorId(+idEventoPorLibro);
     await this._eventoPorLibroService.borrarEvento(+idEventoPorLibro);
-    response.redirect('/evento-por-libro/asignar-evento/' + idAutor + '/' + eventoPorLibro.libro.id);
+    response.redirect('/evento-por-libro/emparejar/' + idAutor + '/' + eventoPorLibro.libro.id);
   }
 }
 

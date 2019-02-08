@@ -97,7 +97,7 @@ export class UsuarioController {
 
 
 
-    @Get('crear-usuario')
+    @Get('crearRegistro-usuario')
     async mostrarCrearUsuario(
         @Res() res,
         @Query('error') error: string
@@ -109,12 +109,12 @@ export class UsuarioController {
             mensaje = error;
         }
 
-        res.render('crear-usuario',{
+        res.render('crearRegistro-usuario',{
             mensaje:mensaje
         })
     }
 
-    @Post('crear-usuario')
+    @Post('crearRegistro-usuario')
     async crearUsuarioFuncion(
         @Res() res,
         @Body() datosUsuario
@@ -150,7 +150,7 @@ export class UsuarioController {
 
             const parametrosConsulta = `?error=${listaErrores}`;
 
-            res.redirect('/usuario/crear-usuario' + parametrosConsulta)
+            res.redirect('/usuario/crearRegistro-usuario' + parametrosConsulta)
         } else {
 
             const respuesta = await this._usuarioService.crear(datosUsuario)

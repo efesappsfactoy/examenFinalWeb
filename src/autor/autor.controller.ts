@@ -93,7 +93,7 @@ export class AutorController {
         mensaje = error;
       }
       response.render(
-        'crear-autor',
+        'crearRegistro-autor',
         {
           mensaje: mensaje
         });
@@ -135,7 +135,7 @@ export class AutorController {
     if (hayErrores) {
       console.error(errores);
       const parametrosConsulta = `?error=${listaErrores}`;
-      response.redirect('/autores/crear/' + parametrosConsulta);
+      response.redirect('/autores/crearRegistro/' + parametrosConsulta);
     } else {
       autor.usuario = sesion.idUsuario;
       await this._autorService.crear(autor);
@@ -179,7 +179,7 @@ export class AutorController {
         .buscarPorId(+idAutor);
 
       response.render(
-        'crear-autor', {
+        'crearRegistro-autor', {
           autor: autorParaActualizar,
           mensaje: mensaje,
         },
