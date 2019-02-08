@@ -23,13 +23,11 @@ import {RolModule} from "./rol/rol.module";
       type: 'mysql',
       host: 'localhost',
       port: 32769,
-      username: 'miguel',
-      password: '182025',
-      database: 'examenWeb',
-      // BDD Ya existe -> synchronized: false
+      username: 'web',
+      password: '123',
+      database: 'web',
       synchronize: true,
-      dropSchema: false
-        , //borra la base y se vuelve a crearRegistro, buena idea para pruebas pero no para produccion
+      dropSchema: false,
       entities: [
         RolEntity, UsuarioEntity, LibroEntity, AutorEntity, RolPorUsuarioEntity, EventoEntity, EventoPorLibroEntity
       ],
