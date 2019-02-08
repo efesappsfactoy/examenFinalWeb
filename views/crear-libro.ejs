@@ -16,7 +16,7 @@
         method="POST">
 
 
-    <div>
+    <div class="form-group">
         <label for="idAutor"></label>
         <input
                 id="idAutor"
@@ -27,7 +27,7 @@
     </div>
     <br>
 
-    <div>
+    <div class="form-group">
         <label for="isbn">ISBN:</label>
         <input
                 id="isbn"
@@ -37,7 +37,7 @@
                 required>
     </div>
     <br>
-    <div>
+    <div class="form-group">
         <label for="nombre">Nombre:</label>
         <input
                 id="nombre"
@@ -47,7 +47,7 @@
                 required>
     </div>
     <br>
-    <div>
+    <div class="form-group">
         <label for="paginas">Número de páginas:</label>
         <input
                 id="paginas"
@@ -57,7 +57,7 @@
                 required>
     </div>
     <br>
-    <div>
+    <div class="form-group">
         <label for="edicion">Edición:</label>
         <input
                 id="edicion"
@@ -67,7 +67,7 @@
                 required>
     </div>
     <br>
-    <div>
+    <div class="form-group">
         <label for="fechaPublicacion">Fecha de publicación:</label>
         <input
                 id="fechaPublicacion"
@@ -79,7 +79,7 @@
                 required>
     </div>
     <br>
-    <div>
+    <div class="form-group">
         <label for="editorial">Editorial:</label>
         <input
                 id="editorial"
@@ -89,7 +89,7 @@
                 required>
     </div>
     <br>
-    <button>
+    <button type="submit" class="btn btn-primary">
         <%= estaCreando ? 'Crear' : 'Actualizar' %> Libro
     </button>
 
