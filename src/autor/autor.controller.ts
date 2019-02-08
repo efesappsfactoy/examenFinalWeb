@@ -145,7 +145,7 @@ export class AutorController {
   }
 
 
-  @Post('borrarLibro/:idAutor')
+  @Post('borrarEventoPorLibro/:idAutor')
   async borrarAutor(
     @Param('idAutor') idAutor: string,
     @Res() response,

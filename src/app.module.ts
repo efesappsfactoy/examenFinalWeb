@@ -14,7 +14,7 @@ import {AutorModule} from "./autor/autor.module";
 import {RolPorUsuarioModule} from "./rol-por-usuario/rol-por-usuario.module";
 import {UsuarioModule} from "./usuario/usuario.module";
 import {EventoModule} from "./evento/evento.module";
-import {EventoPorMedicamentoModule} from "./evento-por-libro/evento-por-medicamento.module";
+import {EventoPorLibroModule} from "./evento-por-libro/evento-por-libro.module";
 import {RolModule} from "./rol/rol.module";
 
 @Module({
@@ -36,7 +36,7 @@ import {RolModule} from "./rol/rol.module";
     }),
     EventoModule,
     UsuarioModule,
-    EventoPorMedicamentoModule,
+    EventoPorLibroModule,
     AutorModule,
     LibroModule,
     RolPorUsuarioModule,

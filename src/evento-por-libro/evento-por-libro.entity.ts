@@ -10,13 +10,13 @@ export class EventoPorLibroEntity{
 
     @ManyToOne(
         type => LibroEntity,
-        libro => libro.eventosPorLibro
+        libro => libro.eventoPorLibro
     )
     libro: LibroEntity;
 
     @ManyToOne(
         type => EventoEntity,
-        evento => evento.eventosPorLibro
+        evento => evento.eventoPorLibro
     )
     evento: EventoEntity;
 

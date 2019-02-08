@@ -9,7 +9,7 @@ import {EventoPorLibroEntity} from "./evento-por-libro/evento-por-libro.entity";
 import {EventoService} from "./evento/evento.service";
 import {FindManyOptions, Like} from "typeorm";
 import {LibroEntity} from "./libro/libro.entity";
-import {EventoPorMedicamentoService} from "./evento-por-libro/evento-por-medicamento.service";
+import {EventoPorLibroService} from "./evento-por-libro/evento-por-libro.service";
 import {CreateUsuarioDto} from "./usuario/dto/create-usuario.dto";
 import {CreateLoginDto} from "./dto/create-login.dto";
 import {validate, ValidationError} from "class-validator";
@@ -21,7 +21,7 @@ export class AppController {
                 private readonly _usuarioService: UsuarioService,
                 private readonly _rolPorUsuarioServicio: RolPorUsuarioService,
                 private readonly _eventoService: EventoService,
-                private readonly _eventoPorMedicamento:EventoPorMedicamentoService){
+                private readonly _eventoPorMedicamento:EventoPorLibroService){
     }
 
     @Get('login')
@@ -168,7 +168,7 @@ export class AppController {
             let eventoPorMedicamento:EventoPorLibroEntity[]
             let evento: EventoPorLibroEntity
 
-            eventoPorMedicamento=await this._eventoPorMedicamento.obtenerMedicamento(+idEvento)
+            eventoPorMedicamento=await this._eventoPorMedicamento.recuperarLibro(+idEvento)
             response.render('lista-participantes',{
                 arregloParticipantes:eventoPorMedicamento,
                 nombreDelEvento: nombreEvento,
