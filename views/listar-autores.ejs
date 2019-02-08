@@ -1,0 +1,85 @@
+<% const existeMensaje = typeof mensaje !== "undefined"%>
+<%- include('header'); %>
+
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+</style>
+
+<% if (existeMensaje){%>
+<p>MENSAJE: <%=mensaje%></p>
+<%}%>
+
+<div class="container">
+    <h1 align="center">Lista de pacientes</h1>
+
+    <form action="/paciente/paciente" method="get">
+
+        <label for="busqueda">Búsqueda paciente</label>
+        <input id="busqueda" type="text" name="busqueda">
+
+        <button>Buscar</button>
+    </form>
+
+    <a href="/paciente/crear-Paciente">
+        <button>Ingresar un nuevo paciente</button>
+    </a>
+
+
+    <table  class="table table-hover">
+        <!-- tr -> table row -->
+        <tr>
+            <!-- th -> table header -->
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Fecha de Nacimiento</th>
+            <th>Número de hijos</th>
+            <th>Tiene seguro?</th>
+            <th>Acciones</th>
+        </tr>
+        <!-- tr -> table row -->
+        <% arregloPaciente.forEach( (paciente)=> { %>
+            <tr>
+                <!-- td -> table detail -->
+                <td><%= paciente.nombres %></td>
+                <td><%= paciente.apellidos %></td>
+                <td><%= paciente.fechaNacimiento %></td>
+                <td><%= paciente.hijos %></td>
+                <td><%= paciente.tieneSeguro %></td>
+
+                <td>
+                    <form action="/paciente/borrar/<%= paciente.id %>" method="POST">
+                        <button  class="btn btn-outline-info btn-block espaciado-boton" type="submit"
+                                 type="submit"> Eliminar</button>
+                    </form>
+                    <a href="/paciente/actualizar-Paciente/<%= paciente.id %>">
+                        <button  class="btn btn-outline-info btn-block espaciado-boton" type="submit">Actualizar</button>
+
+                    </a>
+
+
+                    <a href="/medicamento/inicio/<%= paciente.id %>">
+                        <button  class="btn btn-outline-info btn-block espaciado-boton" type="submit"> Ver Medicamentos</button>
+
+                    </a>
+
+                </td>
+            </tr>
+        <% }) %>
+    </table>
+
+    <a href="/evento/inicio">
+        <button  class="btn btn-outline-info espaciado-boton" type="submit"> Ver eventos</button>
+
+    </a>
+
+</div>
+
+<br>
+<br>
+
+
+
+<%- include('librerias')%>

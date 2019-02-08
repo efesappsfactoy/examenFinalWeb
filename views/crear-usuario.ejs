@@ -1,0 +1,57 @@
+<% const estaCreando = typeof usuario === "undefined"%>
+
+<% const existeMensaje = typeof mensaje !== "undefined"%>
+
+<h1> <%= estaCreando ? 'Registrar':'Actualizar' %> Usuario</h1>
+
+<p><%= estaCreando ? 'Registre':'Actualice' %> un Usuario</p>
+
+<% if (existeMensaje){%>
+<p>MENSAJE: <%=mensaje%></p>
+<%}%>
+
+
+
+<form action="crear-usuario"
+      method="POST">
+    <div>
+        <label for="nombre">Nombre:</label>
+        <input id="nombre"
+               type="text"
+               name="nombre"
+               value="" required>
+    </div>
+    <br>
+    <div>
+        <label for="correo">Correo:</label>
+        <input id="correo"
+               type="email"
+               name="correo"
+               value="" required>
+    </div>
+    <br>
+    <div>
+        <label for="password">Password:</label>
+        <input id="password"
+               type="password"
+               name="password"
+               value="" required>
+    </div>
+    <br>
+    <div>
+        <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+        <input id="fechaNacimiento"
+               type="date"
+               min="1900-01-01"
+               max="2019-02-07"
+               name="fechaNacimiento"
+               value="" required>
+    </div>
+    <br>
+    <button><%= estaCreando ? 'Crear' : 'Actualizar' %> usuario</button>
+
+</form>
+
+<a href="/login">
+    <button>Regresar</button>
+</a>

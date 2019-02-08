@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="es">
+<head>
+
+    <% const existeMensajeError = typeof mensaje !== "undefined"%>
+
+    <% if (existeMensajeError){%>
+    <p>MENSAJE: <%=mensaje%></p>
+    <%}%>
+
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+
+    <link rel="stylesheet" href="/CSS/estilos-generales.css">
+
+    <link rel="stylesheet" href="/bootstrap/css/animate.css">
+
+</head>
+
+<body>
+
+
+<% const existeMensaje = typeof mensajeVerificacion !== "undefined"%>
+
+<% if (existeMensaje){%>
+<p>MENSAJE: <%=mensajeVerificacion%></p>
+<%}%>
+
+
+
+<div class="container col-sm-4" >
+
+    <h2 align="center">Ingresa tus credenciales</h2>
+
+
+    <form action="/login"
+          method="post">
+        <div>
+            <div class="form-group">
+                <label for="correo">Usuario</label>
+                <input id="correo" type="email" name="correo" required class="form-control">
+            </div>
+            <div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input id="password" type="password" name="password" required class="form-control">
+                </div>
+            </div>
+
+            <button  class="btn btn-outline-info btn-block espaciado-boton" >Login</button>
+        </div>
+
+    </form>
+
+    <a href="/usuario/crear-usuario">
+    <button  class="btn btn-outline-info btn-block espaciado-boton">Registrar</button>
+    </a>
+
+    <br>
+
+    <a href="/eventos"><button class="btn btn-outline-danger btn-block">Ver Eventos</button></a>
+
+
+</div>
+<%- include('footer'); %>

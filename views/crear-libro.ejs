@@ -1,0 +1,91 @@
+<% const estaCreando = typeof medicamento === "undefined"%>
+
+<% const existeMensaje = typeof mensaje !== "undefined"%>
+
+
+<h1> <%= estaCreando ? 'Registrar':'Actualizar' %> Medicamento</h1>
+
+<p><%= estaCreando ? 'Registre':'Actualice' %> un Medicamento</p>
+
+<% if (existeMensaje){%>
+<p>MENSAJE: <%=mensaje%></p>
+<%}%>
+
+
+<form action="/medicamento/<%= estaCreando ? 'crear' : 'actualizar' %>-medicamento/<%=idPaciente%>/<%= estaCreando ? '' : medicamento.id %>"
+      method="POST">
+
+
+    <div>
+        <label for="paciente"></label>
+        <input id="paciente"
+               type="text"
+               name="paciente"
+               value="<%= estaCreando ? idPaciente : idPaciente%>"
+               hidden>
+    </div>
+    <br>
+
+    <div>
+        <label for="gramosAIngerir">Gramos a ingerir:</label>
+        <input id="gramosAIngerir"
+               type="text"
+               name="gramosAIngerir"
+               value="<%= estaCreando ? '' : medicamento.gramosAIngerir %>"
+               required>
+    </div>
+    <br>
+    <div>
+        <label for="nombreMedicamento">Nombre del Medicamento:</label>
+        <input id="nombreMedicamento"
+               type="text"
+               name="nombreMedicamento"
+               value="<%= estaCreando ? '' : medicamento.nombreMedicamento %>"
+               required>
+    </div>
+    <br>
+    <div>
+        <label for="composicion">Composición:</label>
+        <input id="composicion"
+               type="text"
+               name="composicion"
+               value="<%= estaCreando ? '' : medicamento.composicion %>"
+               required>
+    </div>
+    <br>
+    <div>
+        <label for="usadoPara">Usado para:</label>
+        <input id="usadoPara"
+               type="text"
+               name="usadoPara"
+               value="<%= estaCreando ? '' : medicamento.usadoPara %>"
+               required>
+    </div>
+    <br>
+    <div>
+        <label for="fechaCaducidad">Fecha de Caducidad:</label>
+        <input id="fechaCaducidad"
+               type="date"
+               min="2019-02-07"
+               max="2028-01-01"
+               name="fechaCaducidad"
+               value="<%= estaCreando ? '' : medicamento.fechaCaducidad %>"
+               required>
+    </div>
+    <br>
+    <div>
+        <label for="numeroPastillas">Número de Pastillas:</label>
+        <input id="numeroPastillas"
+               type="number"
+               name="numeroPastillas"
+               value="<%= estaCreando ? '' : medicamento.numeroPastillas %>"
+               required>
+    </div>
+    <br>
+    <button><%= estaCreando ? 'Crear' : 'Actualizar' %> medicamento</button>
+
+</form>
+
+<a href="/medicamento/inicio/<%=idPaciente%>">
+    <button>Regresar</button>
+</a>
