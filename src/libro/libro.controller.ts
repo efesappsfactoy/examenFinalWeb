@@ -78,7 +78,7 @@ export class LibroController {
     }
   }
 
-  @Get('crearRegistro/:idAutor')
+  @Get('crear/:idAutor')
   crearLibro(
     @Res() response,
     @Param('idAutor') idAutor: string,
@@ -104,7 +104,7 @@ export class LibroController {
     }
   }
 
-  @Post('crearRegistro/:idAutor')
+  @Post('crear/:idAutor')
   async crearLibroFuncion(
     @Res() response,
     @Body() libro: LibroInterface,
@@ -154,7 +154,7 @@ export class LibroController {
     }
   }
 
-  @Post('borrarLibro/:idAutor/:idLibro/')
+  @Post('borrar/:idAutor/:idLibro/')
   async borrarLibro(
     @Param('idLibro') idLibro: string,
     @Param('idAutor') idAutor: string,
