@@ -13,18 +13,18 @@
 
 
 <div class="container">
-    <h1 align="center">Libros Registardos</h1>
+    <h1 align="center">Libros Registrados</h1>
 
     <form action="/libros/listar/<%= idAutor %>" method="GET">
 
-        <label for="busquedaLibro">Búsqueda</label>
-        <input id="busquedaLibro" type="text" name="busquedaLibro">
+        <label for="busqueda">Buscar Libros</label>
+        <input id="busqueda" type="text" name="busqueda">
         <button>Buscar</button>
 
     </form>
 
     <a href="/libros/crear/<%= idAutor %>">
-        <button>Agregar</button>
+        <button>Agregar Libro</button>
     </a>
 
     <a href="/autores/listar">
@@ -75,4 +75,5 @@
     </table>
 
 </div>
+
 <%- include('librerias') %>
