@@ -1,69 +1,71 @@
-<% const estaCreando = typeof paciente === "undefined"%>
+<% const estaCreando = typeof paciente === "undefined" %>
+<% const existeMensaje = typeof mensaje !== "undefined" %>
 
-<% const existeMensaje = typeof mensaje !== "undefined"%>
+<h1> <%= estaCreando ? 'Registrar' : 'Actualizar' %> Autor</h1>
 
-<h1> <%= estaCreando ? 'Registrar':'Actualizar' %> Paciente</h1>
+<p><%= estaCreando ? 'Registre' : 'Actualice' %> un Autor</p>
 
-<p><%= estaCreando ? 'Registre':'Actualice' %> un Paciente</p>
-
-<% if (existeMensaje){%>
-<p>MENSAJE: <%=mensaje%></p>
-<%}%>
+<% if (existeMensaje){ %>
+<p>MENSAJE: <%= mensaje %></p>
+<% } %>
 
 
-<form action="/paciente/<%= estaCreando ? 'crear' : 'actualizar' %>-Paciente/<%= estaCreando ? '' : paciente.id %>"
-      method="POST">
+<form
+        action="/autores/<%= estaCreando ? 'crear' : 'actualizar' %>/<%= estaCreando ? '' : autor.id %>"
+        method="POST">
 
     <div>
         <label for="nombres">Nombres:</label>
-        <input id="nombres"
-               type="text"
-               name="nombres"
-               value="<%= estaCreando ? '' : paciente.nombres %>" required>
+        <input
+                id="nombres"
+                type="text"
+                name="nombres"
+                value="<%= estaCreando ? '' : autor.nombre_autor %>" required>
     </div>
     <br>
     <div>
         <label for="apellidos">Apellidos:</label>
-        <input id="apellidos"
-               type="text"
-               name="apellidos"
-               value="<%= estaCreando ? '' : paciente.apellidos %>" required>
+        <input
+                id="apellidos"
+                type="text"
+                name="apellidos"
+                value="<%= estaCreando ? '' : autor.apellido_autor %>" required>
     </div>
     <br>
     <div>
         <label for="fechaNacimiento">Fecha de Nacimiento:</label>
-        <input id="fechaNacimiento"
-               type="date"
-               min="1900-01-01"
-               max="2019-02-07"
-               name="fechaNacimiento"
-               value="<%= estaCreando ? '' : paciente.fechaNacimiento %>" required>
+        <input
+                id="fechaNacimiento"
+                type="date"
+                min="1900-01-01"
+                max="2019-02-07"
+                name="fechaNacimiento"
+                value="<%= estaCreando ? '' : autor.fecha_nacimiento %>" required>
     </div>
     <br>
     <div>
         <label for="hijos">Hijos:</label>
-        <input id="hijos"
-               type="number"
-               min="0"
-               max="15"
-               name="hijos"
-               value="<%= estaCreando ? '' : paciente.hijos %>" required>
+        <input
+                id="hijos"
+                type="number"
+                min="0"
+                max="15"
+                name="hijos"
+                value="<%= estaCreando ? '' : autor.numero_libros %>" required>
     </div>
     <br>
     <div>
-        <label for="tieneSeguro">Tiene Seguro:</label>
-        <select name="tieneSeguro" id="tieneSeguro">
+        <label for="esEcuatoriano">Ecuatoriano:</label>
+        <select name="esEcuatoriano" id="esEcuatoriano">
             <option value="0">No</option>
             <option value="1">Si</option>
         </select>
     </div>
-
-
     <br>
-    <button><%= estaCreando ? 'Crear' : 'Actualizar' %> paciente</button>
+    <button><%= estaCreando ? 'Crear' : 'Actualizar' %> Autor</button>
 
 </form>
 
-<a href="/paciente/paciente">
+<a href="/autores/listar">
     <button>Regresar</button>
 </a>
