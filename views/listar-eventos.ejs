@@ -1,4 +1,4 @@
-<% const existeMensaje = typeof mensaje !== "undefined"%>
+<% const existeMensaje = typeof mensaje !== "undefined" %>
 <%- include('header'); %>
 
 <style>
@@ -8,68 +8,65 @@
     }
 </style>
 
-<% if (existeMensaje){%>
-<p>MENSAJE: <%=mensaje%></p>
-<%}%>
-
+<% if (existeMensaje){ %>
+<p>MENSAJE: <%= mensaje %></p>
+<% } %>
 
 <div class="container">
 
-    <h1 align="center">Lista de eventos</h1>
+    <h1 align="center">Eventos Registrados</h1>
 
-    <form action="/evento/inicio" method="get">
+    <form action="/eventos/listar" method="GET">
 
-        <label for="busqueda">Búsqueda evento</label>
+        <label for="busqueda">Buscar Eventos</label>
         <input id="busqueda" type="text" name="busqueda">
 
         <button>Buscar</button>
     </form>
-    <a href="/evento/crear-evento">
-        <button>Ingresar un nuevo evento</button>
+    <a href="/eventos/crear">
+        <button>Agregar Evento</button>
     </a>
 
-
-    <table  class="table table-hover" >
+    <table class="table table-hover">
         <!-- tr -> table row -->
         <tr>
             <!-- th -> table header -->
-            <th>Nombre del evento</th>
+            <th>Nombre</th>
             <th>Fecha</th>
             <th>Latitud</th>
             <th>Longitud</th>
             <th>Acciones</th>
         </tr>
         <!-- tr -> table row -->
-        <% arregloEvento.forEach( (evento)=> { %>
-            <tr>
-                <!-- td -> table detail -->
-                <td><%= evento.nombreEvento%></td>
-                <td><%= evento.fechaEvento%></td>
-                <td><%= evento.longitud %></td>
-                <td><%= evento.latitud %></td>
-                <td>
-
-                    <form action="/evento/eliminar-evento/<%= evento.id %>" method="POST">
-                        <button  class="btn btn-outline-info btn-block espaciado-boton" type="submit"
-                                 type="submit"> Eliminar</button>
-                    </form>
-                    <a href="/evento/actualizar-evento/<%= evento.id %>">
-                        <button  class="btn btn-outline-info btn-block espaciado-boton" type="submit">Actualizar</button>
-
-                    </a>
-
-
-                </td>
-            </tr>
+        <% arregloEventos.forEach(evento => { %>
+        <tr>
+            <!-- td -> table detail -->
+            <td><%= evento.nombre_evento %></td>
+            <td><%= evento.fecha_evento %></td>
+            <td><%= evento.longitud_evento %></td>
+            <td><%= evento.latitud_evento %></td>
+            <td>
+                <form action="/eventos/eliminar/<%= evento.id %>" method="POST">
+                    <button
+                            class="btn btn-outline-info btn-block espaciado-boton" type="submit">
+                        Eliminar
+                    </button>
+                </form>
+                <a href="/eventos/actualizar/<%= evento.id %>">
+                    <button class="btn btn-outline-info btn-block espaciado-boton" type="submit">
+                        Actualizar
+                    </button>
+                </a>
+            </td>
+        </tr>
         <% }) %>
     </table>
 
-    <a href="/paciente/paciente">
-        <button  class="btn btn-outline-info espaciado-boton" type="submit">Regresar </button>
+    <a href="/autores/listar">
+        <button class="btn btn-outline-info espaciado-boton" type="submit">
+            Regresar
+        </button>
     </a>
-
-
 </div>
 
-
-<%- include('librerias')%>
+<%- include('librerias') %>
