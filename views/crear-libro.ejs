@@ -1,91 +1,100 @@
-<% const estaCreando = typeof medicamento === "undefined"%>
-
-<% const existeMensaje = typeof mensaje !== "undefined"%>
-
-
-<h1> <%= estaCreando ? 'Registrar':'Actualizar' %> Medicamento</h1>
-
-<p><%= estaCreando ? 'Registre':'Actualice' %> un Medicamento</p>
-
-<% if (existeMensaje){%>
-<p>MENSAJE: <%=mensaje%></p>
-<%}%>
+<% const estaCreando = typeof medicamento === "undefined" %>
+<% const existeMensaje = typeof mensaje !== "undefined" %>
 
 
-<form action="/medicamento/<%= estaCreando ? 'crear' : 'actualizar' %>-medicamento/<%=idPaciente%>/<%= estaCreando ? '' : medicamento.id %>"
-      method="POST">
+<h1> <%= estaCreando ? 'Registrar' : 'Actualizar' %> Libro</h1>
+
+<p><%= estaCreando ? 'Registre' : 'Actualice' %> Libro</p>
+
+<% if (existeMensaje){ %>
+<p>MENSAJE: <%= mensaje %></p>
+<% } %>
+
+
+<form
+        action="/libros/<%= estaCreando ? 'crear' : 'actualizar' %>/<%= idAutor %>/<%= estaCreando ? '' : libro.id %>"
+        method="POST">
 
 
     <div>
-        <label for="paciente"></label>
-        <input id="paciente"
-               type="text"
-               name="paciente"
-               value="<%= estaCreando ? idPaciente : idPaciente%>"
-               hidden>
+        <label for="idAutor"></label>
+        <input
+                id="idAutor"
+                type="text"
+                name="idAutor"
+                value="<%= estaCreando ? '' : idAutor %>"
+                hidden>
     </div>
     <br>
 
     <div>
-        <label for="gramosAIngerir">Gramos a ingerir:</label>
-        <input id="gramosAIngerir"
-               type="text"
-               name="gramosAIngerir"
-               value="<%= estaCreando ? '' : medicamento.gramosAIngerir %>"
-               required>
+        <label for="isbn">ISBN:</label>
+        <input
+                id="isbn"
+                type="text"
+                name="isbn"
+                value="<%= estaCreando ? '' : libro.icbn_libro %>"
+                required>
     </div>
     <br>
     <div>
-        <label for="nombreMedicamento">Nombre del Medicamento:</label>
-        <input id="nombreMedicamento"
-               type="text"
-               name="nombreMedicamento"
-               value="<%= estaCreando ? '' : medicamento.nombreMedicamento %>"
-               required>
+        <label for="nombre">Nombre:</label>
+        <input
+                id="nombre"
+                type="text"
+                name="nombre"
+                value="<%= estaCreando ? '' : libro.nombre_libro %>"
+                required>
     </div>
     <br>
     <div>
-        <label for="composicion">Composición:</label>
-        <input id="composicion"
-               type="text"
-               name="composicion"
-               value="<%= estaCreando ? '' : medicamento.composicion %>"
-               required>
+        <label for="paginas">Número de páginas:</label>
+        <input
+                id="paginas"
+                type="text"
+                name="paginas"
+                value="<%= estaCreando ? '' : libro.numero_paginas %>"
+                required>
     </div>
     <br>
     <div>
-        <label for="usadoPara">Usado para:</label>
-        <input id="usadoPara"
-               type="text"
-               name="usadoPara"
-               value="<%= estaCreando ? '' : medicamento.usadoPara %>"
-               required>
+        <label for="edicion">Edición:</label>
+        <input
+                id="edicion"
+                type="text"
+                name="edicion"
+                value="<%= estaCreando ? '' : libro.edicion %>"
+                required>
     </div>
     <br>
     <div>
-        <label for="fechaCaducidad">Fecha de Caducidad:</label>
-        <input id="fechaCaducidad"
-               type="date"
-               min="2019-02-07"
-               max="2028-01-01"
-               name="fechaCaducidad"
-               value="<%= estaCreando ? '' : medicamento.fechaCaducidad %>"
-               required>
+        <label for="fechaPublicacion">Fecha de publicación:</label>
+        <input
+                id="fechaPublicacion"
+                type="date"
+                min="2019-02-07"
+                max="2028-01-01"
+                name="fechaPublicacion"
+                value="<%= estaCreando ? '' : libro.fecha_publicacion %>"
+                required>
     </div>
     <br>
     <div>
-        <label for="numeroPastillas">Número de Pastillas:</label>
-        <input id="numeroPastillas"
-               type="number"
-               name="numeroPastillas"
-               value="<%= estaCreando ? '' : medicamento.numeroPastillas %>"
-               required>
+        <label for="editorial">Editorial:</label>
+        <input
+                id="editorial"
+                type="number"
+                name="editorial"
+                value="<%= estaCreando ? '' : libro.nombre_editorial %>"
+                required>
     </div>
     <br>
-    <button><%= estaCreando ? 'Crear' : 'Actualizar' %> medicamento</button>
+    <button>
+        <%= estaCreando ? 'Crear' : 'Actualizar' %> Libro
+    </button>
 
 </form>
 
-<a href="/medicamento/inicio/<%=idPaciente%>">
+<a href="/libros/listar/<%= idAutor %>">
     <button>Regresar</button>
 </a>
